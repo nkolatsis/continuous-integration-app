@@ -14,16 +14,11 @@ jobs:
           - dependencies-{{ checksum "package.json" }}
           - dependencies-
       # Install project dependencies
-      - run:
-        name: Install local dependencies
-        command: npm install
+      - run: npm install
       # Cache local dependencies if they don't exist
       - save_cache:
         key: dependencies-{{ checksum "package.json" }}
         paths:
           - node_modules
       # Test the source code
-      - run:
-        name: Testing
-        command: npm test
-
+      - run: npm test
