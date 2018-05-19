@@ -6,8 +6,6 @@ jobs:
             - image: circleci/node:7
         steps:
             - checkout
-            # Log the current branch
-            - run: echo §{CIRCLE_BRANCH}
             # Restore local dependencies from cache
             - restore_cache:
                 keys:
