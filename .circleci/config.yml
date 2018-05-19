@@ -6,5 +6,26 @@ jobs:
       - image: circleci/node:7
     steps:
       - checkout
-      - run: npm install
-      - run: npm test
+      # Log the current branch
+      - run:
+        name: Show current branch
+        command: echo §{CIRCLE_BRANCH}
+      # Restore local dependencies from cache
+      - restore_cache:
+        keys:
+        - dependencies-{{ checksum "package.json" }}
+        - dependencies-
+      # Install project dependencies
+      - run:
+        name: Install local dependencies
+        command: npm install
+      # Cache local dependencies if they don't exist
+      - save_cache:
+        key: dependencies-{{ checksum "package.json" }}
+        paths:
+          - node_modules
+      # Test the source code
+      - run:
+        name: Testing
+        command: npm test
+
